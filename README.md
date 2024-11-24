@@ -4,7 +4,7 @@ npx prisma init
 # init database
 npx prisma migrate dev --name init 
 
-# when change something on the prisma file (schema file)
+# when you change something on the schema.prisma file (change structure)
 npx prisma generate
 npx prisma migrate dev --name name_change
 
