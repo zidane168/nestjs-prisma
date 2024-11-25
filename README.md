@@ -1,3 +1,8 @@
+# install nestjs 
+npm i -g @nestjs/cli
+nest new nestjs-prisma
+
+# install prisma
 npm i prisma -D
 npx prisma init
 
