@@ -6,6 +6,8 @@ npx prisma migrate dev --name init
 
 # when you change something on the schema.prisma file (change structure)
 npx prisma generate
+
+# when u change something
 npx prisma migrate dev --name name_change
 
 # create a module database

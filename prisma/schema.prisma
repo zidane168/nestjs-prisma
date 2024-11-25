@@ -9,31 +9,103 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL") 
 }
 
-model Employee {
+model Administrator {
   id Int @id @default(autoincrement())
   name String
+  slug String
   email String @unique
+  password String
+  phone String
   enabled Boolean @default(true)
-  role Role 
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  lastLoggedIn DateTime @default(now())
+  created DateTime @default(now())
+  updated DateTime? @updatedAt 
+  roles AdministratorRole[]         // nx Administrator have nx roles
+
+  // CreatedByRoles Role[] @relation("CreatedByRoles")             // createdBy belongTo Administrator
+  // UpdatedByRoles Role[] @relation("UpdatedByRoles")             // updatedBy belongTo Administrator
+  // CreatedByPermissions Permission[] @relation("CreatedByPermissions")
+  // UpdatedByPermissions Permission[] @relation("UpdatedByPermissions") 
+  // CreatedByPosts Post[] @relation("CreatedByPosts")
+  // UpdatedByPosts Post[] @relation("UpdatedByPosts") 
 }
 
-enum Role {
-  INTERN
-  ENGINEER
-  ADMIN
+model Role {
+  id       Int @id @default(autoincrement())
+  slug     String
+  name     String
+  created DateTime @default(now())
+  updated DateTime? @updatedAt
+  createdBy    Int?
+  updatedBy    Int? 
+  
+  administrators AdministratorRole[]
+  permissions RolePermission[]    // nx role have nx permssions
 }
 
-model User {
+model AdministratorRole { 
+  id  Int @id @default(autoincrement())
+  administratorId Int 
+  roleId Int  
+  administrator Administrator @relation(fields: [administratorId], references: [id]) 
+  role Role @relation(fields: [roleId], references: [id])   
+
+  // @@id([administratorId, roleId])   // Composite primary key // khoa chinh chung
+}
+
+model Permission {
+  id    Int @id @default(autoincrement())
+  slug  String 
+  name  String
+  controller String 
+  action String 
+  created DateTime @default(now())
+  updated DateTime? @updatedAt 
+  createdBy  Int?
+  updatedBy   Int?   
+
+  roles RolePermission[]
+}
+  
+model RolePermission {
+  id    Int @id @default(autoincrement())
+  roleId  Int 
+  permissionId Int
+ 
+  role        Role @relation(fields: [roleId], references: [id])    
+  permission  Permission @relation(fields: [permissionId], references: [id])  // nx role have nx permssions
+}
+
+model Post {
   id Int @id @default(autoincrement())
-  username String 
-  password String 
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  enabled Boolean 
+  created DateTime @default(now())
+  updated DateTime? @updatedAt 
+  createdBy  Int?
+  updatedBy   Int?   
+
+  // createdById Administrator @relation("CreatedByPosts", fields: [createdBy], references: [id])
+  // updatedById Administrator @relation("UpdatedByPosts", fields: [updatedBy], references: [id])
+
 }
 
+model PostLanguage {
+  id Int @id @default(autoincrement())
+  alias String 
+  name String?  
+  description String?  @db.Text
+  postId Int
+}
+
+model Setting {
+  id Int @id @default(autoincrement())
+  name String
+  created DateTime @default(now())
+  updated DateTime? @updatedAt 
+  createdBy  Int?
+  updatedBy   Int?   
+}
