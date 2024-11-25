@@ -1,16 +1,13 @@
-import { ExecutionContext, Injectable } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { Observable  } from "rxjs";
+import { ExecutionContext, Injectable } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Observable } from 'rxjs';
 
-@Injectable() 
+@Injectable()
 export class LocalGuard extends AuthGuard('local') {
-    canActivate (       // viet sai chinh ta
-        context: ExecutionContext, 
-    ): boolean | Promise<boolean> | Observable<boolean> {
-
-        console.log('Inside local guard!!!')
-        
-        // return false;   // forbidden
-        return super.canActivate( context )
-    }
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    console.log('Inside LocalGuard');
+    return super.canActivate(context);
+  }
 }
