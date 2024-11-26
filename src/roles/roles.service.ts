@@ -11,7 +11,11 @@ export class RolesService {
   }
 
   create(createRoleDto: CreateRoleDto) {
-    return 'This action adds a new role';
+    this.databaseService.role.create({
+      data: {
+        data: createRoleDto,
+      }
+    })
   }
 
   findAll() {
@@ -30,6 +34,24 @@ export class RolesService {
     return `This action removes a #${id} role`;
   }
 
+  async getPaginated(page: number, pageSize: number) { 
+    const skip = (page - 1) * pageSize; 
+    const take = pageSize; 
+    const roles = await this.databaseService.role.findMany({ 
+      skip, 
+      take, 
+      orderBy:  { 
+        created: 'desc',      // You can adjust this to your desired sorting criteria 
+      }, 
+    }); 
+    const totalPosts = await this.databaseService.role.count(); 
+    return { 
+      roles, 
+      totalPages: Math.ceil(totalPosts / pageSize), 
+      currentPage: page, 
+    };
+  }
+
   async getPermissionByRoleId(id: number) {
     const permissions = this.databaseService.role.findUnique({
       where: {
@@ -40,7 +62,8 @@ export class RolesService {
           select: { 
             permission: true
           }
-        }
+        },
+        administrators : true,
       }
     })
 

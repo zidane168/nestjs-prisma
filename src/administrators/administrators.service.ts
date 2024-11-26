@@ -49,6 +49,8 @@ export class AdministratorsService {
     let result = [];
     for(let i=0; i < listPermissions.roles.length; i++) {
       const rolePermissions = await this.roleService.getPermissionByRoleId(listPermissions.roles[i].roleId); 
+      console.log ( JSON.stringify(rolePermissions, null, 2) ) 
+
       const detailPermissions = rolePermissions.permissions.map(item => ({
         controller: item.permission.controller,
         action: item.permission.action
