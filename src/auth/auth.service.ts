@@ -29,9 +29,25 @@ export class AuthService {
     if (!user) {
       throw new Error('Invalid credentials');
     }
+
+    // let permissions: any = [
+    //     { "controller": "post", "action": "add" },
+    //     { "controller": "post", "action": "edit" },
+    //     { "controller": "post", "action": "delete" },
+    //     { "controller": "post", "action": "view" },
+
+    //     { "controller": "setting", "action": "add" },
+    //     { "controller": "setting", "action": "edit" },
+    //     { "controller": "setting", "action": "delete" },
+    //     { "controller": "setting", "action": "view" },
+    // ];
+
+    // get permissions by user id 
+    // const payload = { id: user.id, email: user.email, permissions: permissions };
     const payload = { id: user.id, email: user.email };
     return {
       access_token: this.jwtService.sign(payload),
     };
   }
+ 
 }

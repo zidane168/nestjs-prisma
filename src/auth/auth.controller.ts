@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, HttpException, UnauthorizedException, Req   } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, HttpException, UnauthorizedException, Req, SetMetadata   } from '@nestjs/common';
 import { AuthService } from './auth.service'; 
 import { LocalGuard } from './guards/local.guard';   
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { Request } from 'express'
+import { PermissionGuard } from './guards/permission.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -13,8 +14,7 @@ export class AuthController {
   @Post('login')
   @UseGuards(LocalGuard) 
   async login( @Body() body: { email: string; password: string }) { 
-   
-    console.log(' -=-=--=-=-=-== ')
+    
     const user = await this.authService.validateUser(body.email, body.password);
     console.log('Request Body:', body.email, body.password) 
     if (!user) {
@@ -26,12 +26,10 @@ export class AuthController {
   }
 
   @Get('status')
-  @UseGuards(JwtAuthGuard)    // just use this line for need a bearer token
-  status (@Req() req: Request) {
-    console.log('Inside AuthController/status method')
-    console.log(req.user)
+  @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token 
+  @SetMetadata('permissions', { "controller": "post", "action": "view" } )
+  status (@Req() req: any) {
+    console.log('Inside AuthController/status method')  
   }
-
-   // @UseGuards(AuthGuard('local'))  // dùng thu muc strategies/local.strategy.ts điều huong sang 401
-  // @UseGuards()
+ 
 }

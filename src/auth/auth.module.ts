@@ -6,17 +6,20 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { AdministratorsService } from 'src/administrators/administrators.service';
+import { RolesService } from 'src/roles/roles.service';
 
 @Module({
   imports: [
+    
     DatabaseModule,
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'fallbackSecretKey',
-      signOptions: { expiresIn: '1h' }, // Set expiration time as needed
+      signOptions: { expiresIn: '20h' }, // Set expiration time as needed
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],  //Them localStrategy để dieu huong nè
+  providers: [AuthService, LocalStrategy, JwtStrategy, AdministratorsService, RolesService],  //Them localStrategy để dieu huong nè
 })
 export class AuthModule {}
