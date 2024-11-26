@@ -12,10 +12,10 @@ export class AuthService {
   async validateUser(email: string, password: string) {
     const user = await this.databaseService.administrator.findUnique({ where: { email } });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Log the hashed password for debugging (not recommended in production)
-    console.log('Hashed password:', hashedPassword); 
+    // // Log the hashed password for debugging (not recommended in production)
+    // console.log('Hashed password:', hashedPassword); 
     console.log(user.password)
 
     if (user && (await bcrypt.compare(password, user.password))) { 
