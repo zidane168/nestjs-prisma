@@ -1,15 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { RolesService } from './roles.service';
-import { CreateRoleDto } from './dto/create-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
-
+import { Prisma } from '@prisma/client';
+import { ApiCreatedResponse } from '@nestjs/swagger';
+import { Role } from './entities/role.entity';
+import { RolePaginate } from './entities/rolePaginate';
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
   @Post()
-  create(@Body() createRoleDto: CreateRoleDto) {
+  @ApiCreatedResponse({ type: Role })
+  create(@Body() createRoleDto: Prisma.RoleCreateInput) {
     return this.rolesService.create(createRoleDto);
+  }
+
+  @Get('paginated')
+  @ApiCreatedResponse({ type: RolePaginate })
+  getPaginated(
+    @Query('page') page: number,
+    @Query('pageSize') pageSize: number,
+  ) {
+    return this.rolesService.getPaginated(page, pageSize);
   }
 
   @Get()
@@ -23,7 +34,7 @@ export class RolesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
+  update(@Param('id') id: string, @Body() updateRoleDto: Prisma.RoleUpdateInput) {
     return this.rolesService.update(+id, updateRoleDto);
   }
 
