@@ -4,6 +4,7 @@ import { LocalGuard } from './guards/local.guard';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { Request } from 'express'
 import { PermissionGuard } from './guards/permission.guard';
+import { ACTION, PERMISSION } from 'src/lib/enum';
 
 @Controller('auth')
 export class AuthController {
@@ -27,7 +28,7 @@ export class AuthController {
 
   @Get('status')
   @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token 
-  @SetMetadata('permissions', { "controller": "post", "action": "view" } )
+  @SetMetadata('permissions', { "controller": PERMISSION.POST, "action": ACTION.ADD } )
   status (@Req() req: any) {
     console.log('Inside AuthController/status method')  
   }
