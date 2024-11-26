@@ -15,10 +15,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Log the hashed password for debugging (not recommended in production)
-    console.log('Hashed password:', hashedPassword);
-    // $2b$10$qTNOn.2T4JdWG1S3hbj85uutbfBe68UMumJwFvVGzoTDXmLW3GuEy  
-    // $2b$10$sYoCTDKsz9JyJ9IMJcLUIu0gwZPq9ZRcPRfkm6lqQ1TyJZ5gsSwYy$2b$10$5qYdl.CQH5mzOoBsKaDO8uXNVNPRQXnCs/LQg96F93hIrBuGn2hLq
-
+    console.log('Hashed password:', hashedPassword); 
     console.log(user.password)
 
     if (user && (await bcrypt.compare(password, user.password))) { 
