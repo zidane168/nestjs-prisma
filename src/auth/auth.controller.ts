@@ -26,7 +26,7 @@ export class AuthController {
   }
 
   @Get('status')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)    // just use this line for need a bearer token
   status (@Req() req: Request) {
     console.log('Inside AuthController/status method')
     console.log(req.user)
