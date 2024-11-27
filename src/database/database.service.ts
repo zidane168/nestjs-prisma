@@ -3,10 +3,9 @@ import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class DatabaseService extends PrismaClient implements OnModuleInit{
+    logSystem: any;
 
     async onModuleInit() {
         await this.$connect()
-    }
-
-    
+    } 
 }

@@ -109,3 +109,14 @@ model Setting {
   createdBy  Int?
   updatedBy   Int?   
 }
+
+model LogSystem { 
+  id Int @id @default(autoincrement()) 
+  action String 
+  ip String 
+  browser String?
+  method String?
+  url String?
+  created DateTime @default(now()) 
+  createdBy Int? 
+}
