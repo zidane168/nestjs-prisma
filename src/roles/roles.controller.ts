@@ -4,13 +4,14 @@ import { Prisma } from '@prisma/client';
 import { ApiCreatedResponse } from '@nestjs/swagger';
 import { Role } from './entities/role.entity';
 import { RolePaginate } from './entities/rolePaginate';
+import { CreateRoleDto } from './dto/create-role.dto';
 @Controller('roles')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
   @Post()
   @ApiCreatedResponse({ type: Role })
-  create(@Body() createRoleDto: Prisma.RoleCreateInput) {
+  create(@Body() createRoleDto: CreateRoleDto) {
     return this.rolesService.create(createRoleDto);
   }
 
@@ -23,7 +24,7 @@ export class RolesController {
     return this.rolesService.getPaginated(page, pageSize);
   }
 
-  @Get()
+  @Get() 
   findAll() {
     return this.rolesService.findAll();
   }

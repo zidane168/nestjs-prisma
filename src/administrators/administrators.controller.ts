@@ -2,7 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { AdministratorsService } from './administrators.service';
 import { CreateAdministratorDto } from './dto/create-administrator.dto';
 import { UpdateAdministratorDto } from './dto/update-administrator.dto';
-
+import { ApiTags } from '@nestjs/swagger';
+ 
 @Controller('administrators')
 export class AdministratorsController {
   constructor(private readonly administratorsService: AdministratorsService) {}

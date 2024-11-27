@@ -2,10 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { SettingsService } from './settings.service';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { UpdateSettingDto } from './dto/update-setting.dto';
+import { ApiTags } from '@nestjs/swagger';
 // import { AuthGuard } from '@nestjs/passport';
 // import { RolesGuard } from 'src/auth/roles.guard';
 // import { Roles } from 'src/auth/roles.decorator';
 
+@ApiTags('Setting')
 @Controller('settings')
 // @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class SettingsController {
