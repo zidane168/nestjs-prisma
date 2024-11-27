@@ -17,23 +17,35 @@ export class AdministratorTokensService {
     } catch (error) {
       console.error( error )
       throw new InternalServerErrorException(error.message)
-    }
-   
+    } 
+  }
+
+  async getAdministratorIdByToken(token: string) {
+    const result = await this.databaseService.administratorToken.findUnique({
+      where: {
+        token, 
+        exp: {
+          gte: new Date()
+        }
+      }
+    })
+
+    return result.administratorId;
   }
 
   async findAll() {
     return `This action returns all administratorTokens`;
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return `This action returns a #${id} administratorToken`;
   }
 
-  update(id: number, updateAdministratorTokenDto: UpdateAdministratorTokenDto) {
+  async update(id: number, updateAdministratorTokenDto: UpdateAdministratorTokenDto) {
     return `This action updates a #${id} administratorToken`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} administratorToken`;
   }
 }

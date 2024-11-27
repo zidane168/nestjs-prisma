@@ -8,8 +8,7 @@ export class DatabaseService extends PrismaClient implements OnModuleInit{
             log: ['query', 'info', 'warn', 'error'], 
             // Enable detailed logging 
         });
-    }
- 
+    } 
 
     async onModuleInit() {
         await this.$connect()
