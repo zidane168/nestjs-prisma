@@ -29,10 +29,24 @@ export class AuthController {
     return this.authService.login(body.email, body.password); 
   }
 
+
+  private getUserIdFromRequest(@Req() req: Request): string {
+    const userId = req.user?.id; // Adjust the property name as needed
+
+    if (!userId) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+
+    return userId;
+  }
+
   @Get('status')
-  @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token 
+  @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token  
   @SetMetadata('permissions', { "controller": PERMISSION.POST, "action": ACTION.ADD } )
-  status (@Req() req: any) {
+  status (@Req() req: Request) {
+    const userId = this.getUserIdFromRequest(req);
+    console.log('User ID:' + userId);
+    console.log(' ------------************---------------');
     console.log('Inside AuthController/status method')  
   }
  
