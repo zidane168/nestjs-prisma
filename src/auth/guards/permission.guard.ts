@@ -17,10 +17,8 @@ export class PermissionGuard implements CanActivate {
 
         // get req.user.id 
         const userPermissions = await this.administratorService.getPermissionByAdminId(req.user.id);
-
-       // const userPermissions = req?.user?.permissions || []
+ 
         const requiredPermissions = this.reflector.get('permissions', context.getHandler()) || [];  // get data from metaData on controller setMeta
-        // const hasAllPermissions = requiredPermissions.some(p => userPermissions.controller === p.controller && p.action === userPermissions.action)
         const foundPermission = userPermissions.find(p => p.controller === requiredPermissions.controller && p.action === requiredPermissions.action)
   
         if (foundPermission) { //|| hasAllPermissions)  {

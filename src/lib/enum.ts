@@ -9,6 +9,7 @@ export enum ACTION {
 export enum PERMISSION {
     POST = "post",
     SETTING = "setting",
+    ROLE = "role",
 }
 
  

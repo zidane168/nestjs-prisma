@@ -61,7 +61,7 @@ export class RolesService {
       roles, 
       totalPages: Math.ceil(totalPosts / pageSize), 
       total: totalPosts,
-      currentPage: page, 
+      currentPage: Number(page), 
     };
   }
 
