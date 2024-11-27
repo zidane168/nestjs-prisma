@@ -10,6 +10,10 @@ export class LoggerMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     const ip = req.ip;
+
+    console.log(' ----------- ')
+    console.log(req.user)
+    console.log(' ----------- ')
     const userAgent = useragent.parse(req.headers['user-agent'] || '');
     const action = `${req.method} ${req.originalUrl}`;
 
