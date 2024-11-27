@@ -8,11 +8,12 @@ import { AdministratorsModule } from './administrators/administrators.module';
 import { RolesModule } from './roles/roles.module'; 
 import { LogSystemsModule } from './log-systems/log-systems.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
-import { LogSystemsService } from './log-systems/log-systems.service';
+import { LogSystemsService } from './log-systems/log-systems.service'; 
+import { AdministratorTokensModule } from './administrator-tokens/administrator-tokens.module';
 
 @Module({ 
   imports: [ 
-    DatabaseModule, AuthModule, SettingsModule,  AdministratorsModule, RolesModule, LogSystemsModule],
+    DatabaseModule, AuthModule, SettingsModule,  AdministratorsModule, RolesModule, LogSystemsModule, AdministratorTokensModule],
   controllers: [AppController],
   providers: [AppService, LogSystemsService],
 })

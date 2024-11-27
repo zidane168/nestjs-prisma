@@ -3,6 +3,13 @@ import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class DatabaseService extends PrismaClient implements OnModuleInit{ 
+    constructor() { 
+        super({ 
+            log: ['query', 'info', 'warn', 'error'], 
+            // Enable detailed logging 
+        });
+    }
+ 
 
     async onModuleInit() {
         await this.$connect()
@@ -14,6 +21,15 @@ export class DatabaseService extends PrismaClient implements OnModuleInit{
     set logSystem(value: any) { 
         this._logSystem = value; 
     } 
+
+    get administratorToken() {
+        return this.administratorToken
+    }
+
+    set administratorToken(value: any) {
+        this._administratorToken = value;
+    }
     
     private _logSystem: any
+    private _administratorToken: any
 }

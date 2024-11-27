@@ -25,6 +25,7 @@ model Administrator {
   created DateTime @default(now())
   updated DateTime? @updatedAt 
   roles AdministratorRole[]         // nx Administrator have nx roles
+  administratorTokens AdministratorToken[]
 
   // CreatedByRoles Role[] @relation("CreatedByRoles")             // createdBy belongTo Administrator
   // UpdatedByRoles Role[] @relation("UpdatedByRoles")             // updatedBy belongTo Administrator
@@ -44,7 +45,7 @@ model Role {
   updatedBy    Int? 
   
   administrators AdministratorRole[]
-  permissions RolePermission[]    // nx role have nx permssions
+  permissions RolePermission[]    // nx role have nx permssions 
 }
 
 model AdministratorRole { 
@@ -88,6 +89,8 @@ model Post {
   createdBy  Int?
   updatedBy   Int?   
 
+  postLanguages PostLanguage[] // Define relation to PostLanguage
+
   // createdById Administrator @relation("CreatedByPosts", fields: [createdBy], references: [id])
   // updatedById Administrator @relation("UpdatedByPosts", fields: [updatedBy], references: [id])
 
@@ -99,6 +102,8 @@ model PostLanguage {
   name String?  
   description String?  @db.Text
   postId Int
+
+  post Post @relation(fields: [postId], references: [id]) // Define relation to Post 
 }
 
 model Setting {
@@ -119,4 +124,14 @@ model LogSystem {
   url String?
   created DateTime @default(now()) 
   createdBy Int? 
+}
+
+model AdministratorToken {
+  id Int @id @default(autoincrement())
+  token String
+  exp DateTime @default(now())
+  administratorId Int 
+
+  // administrator Administrator @relation(fields: [administratorId], references: [id]) 
+  administrator Administrator @relation( fields: [administratorId], references: [id] )
 }

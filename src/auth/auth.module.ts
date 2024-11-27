@@ -8,6 +8,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { AdministratorsService } from 'src/administrators/administrators.service';
 import { RolesService } from 'src/roles/roles.service';
+import { AdministratorTokensService } from 'src/administrator-tokens/administrator-tokens.service';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { RolesService } from 'src/roles/roles.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy, AdministratorsService, RolesService],  //Them localStrategy để dieu huong nè
+  providers: [AuthService, LocalStrategy, JwtStrategy, AdministratorsService, RolesService, AdministratorTokensService],  //Them localStrategy để dieu huong nè
 })
 export class AuthModule {}
