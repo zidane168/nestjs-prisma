@@ -4,5 +4,6 @@ export class CreateLogSystemDto {
     browser: string;
     method: string;
     url: string;
+    createdBy?: number;
   }
   

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super({ usernameField: 'email' });  
-    // phải dùng username, nếu ko thì phải maping nhu vay, ten mac dinh là username, password thì nó mới đi đúng flow từ  
+    // phải dùng username, nếu ko thì phải maping nhu vay, ten mac dinh là username, password thì nó mới đi đúng flow  
   }
 
   async validate(email: string, password: string) { // no trigger

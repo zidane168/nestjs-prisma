@@ -23,6 +23,7 @@ export class LoggerMiddleware implements NestMiddleware {
       browser: userAgent.toString(),
       method: req.method,
       url: req.originalUrl,
+      createdBy: req.userId
     });
 
     next();

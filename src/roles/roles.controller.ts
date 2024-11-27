@@ -8,6 +8,7 @@ import { CreateRoleDto } from './dto/create-role.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { PermissionGuard } from 'src/auth/guards/permission.guard';
 import { ACTION, PERMISSION } from 'src/lib/enum';
+import { Request } from "express"
 
 
 @ApiBearerAuth('accessToken')
@@ -19,8 +20,8 @@ export class RolesController {
   @SetMetadata('permissions', { "controller": PERMISSION.ROLE, "action": ACTION.ADD } )
   @Post()
   @ApiCreatedResponse({ type: Role })
-  create(@Body() createRoleDto: CreateRoleDto) {
-    return this.rolesService.create(createRoleDto);
+  create(@Body() createRoleDto: CreateRoleDto, request: Request) {
+    return this.rolesService.create(createRoleDto, request);
   }
 
   @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token 
