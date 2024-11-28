@@ -6,7 +6,8 @@ import { Request } from 'express'
 import { PermissionGuard } from './guards/permission.guard';
 import { ACTION, PERMISSION } from 'src/lib/enum';
 import { ApiBearerAuth, ApiCreatedResponse, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { CreateAuthDto } from './dto/create-auth.dto'; 
+import { ExtendedRequest } from 'src/types/express';
 
 // @ApiTags('CMS')
 @ApiBearerAuth('accessToken') // chỗ nào cần xài cái Authorize trong các api phải define mỗi cái ở đây!!!
@@ -30,23 +31,24 @@ export class AuthController {
   }
 
 
-  private getUserIdFromRequest(@Req() req: Request): string {
-    const userId = req.user?.id; // Adjust the property name as needed
+  private getUserIdFromRequest(@Req() req: ExtendedRequest): string { // cách sử dụng type khác, quá hay, tuyệt vời - ExtendedRequest
+    const user  = req.user; // Adjust the property name as needed
 
+    const userId = user?.id; 
     if (!userId) {
       throw new UnauthorizedException('User not authenticated');
     }
 
-    return userId;
+    return user?.id;
   }
 
   @Get('status')
   @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token  
   @SetMetadata('permissions', { "controller": PERMISSION.POST, "action": ACTION.ADD } )
-  status (@Req() req: Request) {
+  status (@Req() req: ExtendedRequest) {
     const userId = this.getUserIdFromRequest(req);
     console.log('User ID:' + userId);
-    console.log(' ------------************---------------');
+    console.log(' ------------ ************ ---------------');
     console.log('Inside AuthController/status method')  
   }
  

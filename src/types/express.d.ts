@@ -1,8 +1,13 @@
 // src/types/express.d.ts
 import { Request } from 'express';
+ 
 
-declare module 'express' {
-  export interface Request {
-    userId?: number; // Add the userId property to the Request interface
-  }
+export interface User {
+  id: string; // Or the appropriate type for your user ID
+  // Other user properties if needed
+}
+
+
+interface ExtendedRequest extends Request<any> {
+  user?: User; // Declare optional user property with User interface
 }

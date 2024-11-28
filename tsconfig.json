@@ -18,9 +18,9 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     // other options 
-    "typeRoots": [
-      "./node_modules/@types", 
-      "./src/types"
-    ]
+    // "typeRoots": [
+    //   "./node_modules/@types", 
+    //   "./src/types"
+    // ]
   }
 }
