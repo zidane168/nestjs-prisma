@@ -7,11 +7,9 @@ import { RolePaginate } from './entities/rolePaginate';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { PermissionGuard } from 'src/auth/guards/permission.guard';
-import { ACTION, PERMISSION } from 'src/lib/enum';
-import { Request } from "express"
+import { ACTION, PERMISSION } from 'src/lib/enum'; 
 import { ExtendedRequest } from 'src/types/express';
-
-
+ 
 @ApiBearerAuth('accessToken')
 @Controller('roles')
 export class RolesController {

@@ -9,19 +9,16 @@ import { RolesModule } from './roles/roles.module';
 import { LogSystemsModule } from './log-systems/log-systems.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { LogSystemsService } from './log-systems/log-systems.service'; 
-import { AdministratorTokensModule } from './administrator-tokens/administrator-tokens.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { UserInterceptor } from './interceptors/user.interceptor';
-
+import { AdministratorTokensModule } from './administrator-tokens/administrator-tokens.module'; 
 @Module({ 
   imports: [ 
     DatabaseModule, AuthModule, SettingsModule,  AdministratorsModule, RolesModule, LogSystemsModule, AdministratorTokensModule],
   controllers: [AppController],
   providers: [AppService, LogSystemsService, 
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: UserInterceptor,
-    }
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: UserInterceptor,
+    // }
   ],
 })
 
