@@ -3,7 +3,7 @@ import { Request } from 'express';
  
 
 export interface User {
-  id: string; // Or the appropriate type for your user ID
+  id: number; // Or the appropriate type for your user ID
   // Other user properties if needed
 }
 

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, SetMetadata, Req } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { Prisma } from '@prisma/client';
 import { ApiBearerAuth, ApiCreatedResponse } from '@nestjs/swagger';
@@ -9,6 +9,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { PermissionGuard } from 'src/auth/guards/permission.guard';
 import { ACTION, PERMISSION } from 'src/lib/enum';
 import { Request } from "express"
+import { ExtendedRequest } from 'src/types/express';
 
 
 @ApiBearerAuth('accessToken')
@@ -19,9 +20,9 @@ export class RolesController {
   @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token 
   @SetMetadata('permissions', { "controller": PERMISSION.ROLE, "action": ACTION.ADD } )
   @Post()
-  @ApiCreatedResponse({ type: Role })
-  create(@Body() createRoleDto: CreateRoleDto, request: Request) {
-    return this.rolesService.create(createRoleDto, request);
+  @ApiCreatedResponse({ type: Role }) 
+  create(@Body() createRoleDto: CreateRoleDto, @Req() req: ExtendedRequest) {
+    return this.rolesService.create(createRoleDto, req);
   }
 
   @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token 

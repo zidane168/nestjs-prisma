@@ -4,6 +4,7 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { Prisma } from '@prisma/client';
 import { Request } from 'express'
+import { ExtendedRequest } from 'src/types/express';
 
 @Injectable()
 export class RolesService {
@@ -12,11 +13,11 @@ export class RolesService {
 
   }
 
-  async create(createRoleDto: Prisma.RoleCreateInput, request: Request) {
+  async create(createRoleDto: Prisma.RoleCreateInput, request: ExtendedRequest) {
     await this.databaseService.role.create({
       data: {
         ...createRoleDto,
-        createdBy: request.userId,
+        createdBy: request.user.id,
       }
     })
   }

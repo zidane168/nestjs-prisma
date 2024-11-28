@@ -31,7 +31,7 @@ export class AuthController {
   }
 
 
-  private getUserIdFromRequest(@Req() req: ExtendedRequest): string { // cách sử dụng type khác, quá hay, tuyệt vời - ExtendedRequest
+  private getUserIdFromRequest(@Req() req: ExtendedRequest): number { // cách sử dụng type khác, quá hay, tuyệt vời - ExtendedRequest
     const user  = req.user; // Adjust the property name as needed
 
     const userId = user?.id; 

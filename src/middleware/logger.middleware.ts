@@ -2,13 +2,14 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express'; 
 import { LogSystemsService } from 'src/log-systems/log-systems.service';
+import { ExtendedRequest } from 'src/types/express';
 import * as useragent from 'useragent'; 
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   constructor(private readonly logSystemService: LogSystemsService) {}
 
-  async use(req: Request, res: Response, next: NextFunction) {
+  async use(req: ExtendedRequest, res: Response, next: NextFunction) {
     const ip = req.ip;
 
     console.log(' ----------- ')
@@ -23,7 +24,7 @@ export class LoggerMiddleware implements NestMiddleware {
       browser: userAgent.toString(),
       method: req.method,
       url: req.originalUrl,
-      createdBy: req.userId
+      // createdBy: req.user.id
     });
 
     next();
