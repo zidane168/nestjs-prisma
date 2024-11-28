@@ -12,9 +12,9 @@ export class LoggerMiddleware implements NestMiddleware {
   async use(req: ExtendedRequest, res: Response, next: NextFunction) {
     const ip = req.ip;
 
-    console.log(' ----------- ')
-    console.log(req.user)
-    console.log(' ----------- ')
+    console.log(' ------log ----- ')
+    console.log(req.user)           // call before call the UseGuard, so it dont have any user stored
+    console.log(' -------log---- ')
     const userAgent = useragent.parse(req.headers['user-agent'] || '');
     const action = `${req.method} ${req.originalUrl}`;
 

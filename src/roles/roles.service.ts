@@ -34,12 +34,15 @@ export class RolesService {
     })
   }
 
-  async update(id: number, updateRoleDto: Prisma.RoleUpdateInput) {
+  async update(id: number, updateRoleDto: Prisma.RoleUpdateInput, request: ExtendedRequest) {
     return await this.databaseService.role.update({
       where: {
         id
       },
-      data: updateRoleDto
+      data: {
+        ...updateRoleDto,
+        updatedBy: request.user.id,
+      }
     })
   }
 

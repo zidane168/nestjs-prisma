@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { setTimezoneMiddleware } from 'src/middleware/set-timezone.middleware';
 
 @Injectable()
 export class DatabaseService extends PrismaClient implements OnModuleInit{ 
@@ -8,6 +9,8 @@ export class DatabaseService extends PrismaClient implements OnModuleInit{
             log: ['query', 'info', 'warn', 'error'], 
             // Enable detailed logging 
         });
+
+        this.$use(setTimezoneMiddleware());
     } 
 
     async onModuleInit() {

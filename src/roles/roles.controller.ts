@@ -9,6 +9,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { PermissionGuard } from 'src/auth/guards/permission.guard';
 import { ACTION, PERMISSION } from 'src/lib/enum'; 
 import { ExtendedRequest } from 'src/types/express';
+import { UpdateRoleDto } from './dto/update-role.dto';
  
 @ApiBearerAuth('accessToken')
 @Controller('roles')
@@ -51,8 +52,8 @@ export class RolesController {
   @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token 
   @SetMetadata('permissions', { "controller": PERMISSION.ROLE, "action": ACTION.EDIT } )
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoleDto: Prisma.RoleUpdateInput) {
-    return this.rolesService.update(+id, updateRoleDto);
+  update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto, @Req() req: ExtendedRequest) {
+    return this.rolesService.update(+id, updateRoleDto, req);
   }
 
   @UseGuards(JwtAuthGuard, PermissionGuard)    // just use this line for need a bearer token 
