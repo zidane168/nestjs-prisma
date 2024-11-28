@@ -7,6 +7,8 @@ import { ExtendedRequest } from 'src/types/express';
 @Injectable()
 export class PostsService {
 
+  
+
   constructor(private readonly databaseService: DatabaseService) {   }
 
   async create(createPostDto: CreatePostDto, request: ExtendedRequest) {
