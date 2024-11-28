@@ -10,9 +10,11 @@ import { LogSystemsModule } from './log-systems/log-systems.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { LogSystemsService } from './log-systems/log-systems.service'; 
 import { AdministratorTokensModule } from './administrator-tokens/administrator-tokens.module'; 
+import { PostsModule } from './posts/posts.module';
+import { PostFilesModule } from './post-files/post-files.module';
 @Module({ 
   imports: [ 
-    DatabaseModule, AuthModule, SettingsModule,  AdministratorsModule, RolesModule, LogSystemsModule, AdministratorTokensModule],
+    DatabaseModule, AuthModule, SettingsModule,  AdministratorsModule, RolesModule, LogSystemsModule, AdministratorTokensModule, PostsModule, PostFilesModule],
   controllers: [AppController],
   providers: [AppService, LogSystemsService, 
     // {

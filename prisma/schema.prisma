@@ -90,7 +90,7 @@ model Post {
   updatedBy   Int?   
 
   postLanguages PostLanguage[] // Define relation to PostLanguage
-
+  postFiles PostFile[]
   // createdById Administrator @relation("CreatedByPosts", fields: [createdBy], references: [id])
   // updatedById Administrator @relation("UpdatedByPosts", fields: [updatedBy], references: [id])
 
@@ -102,6 +102,16 @@ model PostLanguage {
   name String?  
   description String?  @db.Text
   postId Int
+
+  post Post @relation(fields: [postId], references: [id]) // Define relation to Post 
+}
+
+model PostFile {
+  id Int @id @default(autoincrement()) 
+  postId Int 
+  ext String?
+  name String 
+  path String 
 
   post Post @relation(fields: [postId], references: [id]) // Define relation to Post 
 }
