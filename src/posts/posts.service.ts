@@ -5,32 +5,32 @@ import { DatabaseService } from 'src/database/database.service';
 import { ExtendedRequest } from 'src/types/express';
 
 @Injectable()
-export class PostsService {
-
-  
+export class PostsService { 
 
   constructor(private readonly databaseService: DatabaseService) {   }
 
-  async create(createPostDto: CreatePostDto, request: ExtendedRequest) {
+  async create(
+    createPostDto: CreatePostDto, 
+    request: Request) {
     const { postLanguages, postFiles, ...postData } = createPostDto; 
-    const createdPost = await this.databaseService.post.create( { 
-        data: { 
-          ...postData, 
-          createdBy: request.user.id, 
-          postLanguages: { 
-            create: postLanguages, 
-          }, 
-          postFiles: { 
-            create: postFiles, 
-          }, 
-      }, 
-      include: { 
-        postLanguages: true, 
-        postFiles: true, 
-      }, 
-    }); 
+    // const createdPost = await this.databaseService.post.create( { 
+    //     data: { 
+    //       ...postData, 
+    //       createdBy: request.user.id, 
+    //       postLanguages: { 
+    //         create: postLanguages, 
+    //       }, 
+    //       postFiles: { 
+    //         create: postFiles, 
+    //       }, 
+    //   }, 
+    //   include: { 
+    //     postLanguages: true, 
+    //     postFiles: true, 
+    //   }, 
+    // }); 
     
-    return createdPost
+    // return createdPost
   }
 
   findAll() {

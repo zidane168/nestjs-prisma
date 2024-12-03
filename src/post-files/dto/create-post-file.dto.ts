@@ -18,4 +18,12 @@ export class CreatePostFileDto {
     @ApiProperty()
     @IsNumber() 
     postId: number 
+ 
+    constructor(document: CreatePostFileDto, domain: string) {    
+        const { postId,  path, name } = document || {};
+        Object.assign(this, {   postId,  path, name }); 
+        this.postId = postId ?? null
+        this.path = path ? domain + "/" + path : ''
+        this.name = name ?? ''   
+      } 
 }

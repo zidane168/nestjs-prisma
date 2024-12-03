@@ -1,8 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { ExtendedRequest } from 'src/types/express';
+import { UpdatePostDto } from './dto/update-post.dto'; 
 
 @Controller('posts')
 export class PostsController {
@@ -11,7 +10,10 @@ export class PostsController {
     private readonly postsService: PostsService) {}
 
   @Post()
-  async create(@Body() createPostDto: CreatePostDto, @Req request: ExtendedRequest) {
+  async create(
+    @Body() createPostDto: CreatePostDto, 
+    @Req() request: Request
+  ) {
     return this.postsService.create(createPostDto, request)
   }
 

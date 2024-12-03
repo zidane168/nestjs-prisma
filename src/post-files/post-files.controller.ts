@@ -1,34 +1,52 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Req, UploadedFile } from '@nestjs/common';
 import { PostFilesService } from './post-files.service';
-import { CreatePostFileDto } from './dto/create-post-file.dto';
-import { UpdatePostFileDto } from './dto/update-post-file.dto';
+import { CreatePostFileDto } from './dto/create-post-file.dto'; 
+import { ApiConsumes, ApiOkResponse } from '@nestjs/swagger';
+import { diskStorage } from 'multer'; 
+import { FileInterceptor } from '@nestjs/platform-express';
+import { v4 as uuidv4 } from 'uuid';
+import * as path from 'path';
+import { UploadFileDTO } from './dto/upload-file-dto';
 
 @Controller('post-files')
 export class PostFilesController {
-  constructor(private readonly postFilesService: PostFilesService) {}
+  constructor(private readonly postFilesService: PostFilesService) {} 
 
-  @Post()
-  create(@Body() createPostFileDto: CreatePostFileDto) {
-    return this.postFilesService.create(createPostFileDto);
+  @ApiConsumes('multipart/form-data')
+  @Post('/upload') 
+  @ApiOkResponse({
+    type: CreatePostFileDto,
+  })   
+  @UseInterceptors(FileInterceptor('file')) 
+  async upload(
+    @UploadedFile() file: Express.Multer.File, 
+    domain: string
+  ) { 
+    return this.postFilesService.upload(file, domain);
   }
 
-  @Get()
-  findAll() {
-    return this.postFilesService.findAll();
-  }
+  // @Get(':id')
+  // @HttpCode(HttpStatus.OK)
+  // @ApiOperation({ summary: 'Get a Event Expense File detail' })
+  // @ApiOkResponse({
+  //   type: EventExpenseFile,
+  // })
+  // @CheckPolicy((ability) => ability.can(PermissionAction.VIEW, PermissionController.EVENT))
+  // async get(
+  //   @Param('id') id: string,
+  //   @Req() request: Request
+  // ): Promise<EventExpenseFile> {
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postFilesService.findOne(+id);
-  }
+  //   const idNumber = parseInt(id)
+  //   return await this.eventExpenseFileService.getInfo(idNumber, request?.hostname); 
+  // } 
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostFileDto: UpdatePostFileDto) {
-    return this.postFilesService.update(+id, updatePostFileDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postFilesService.remove(+id);
-  }
+  // @Delete('')
+  // @HttpCode(HttpStatus.OK)
+  // @ApiNoContentResponse()
+  // @CheckPolicy((ability) => ability.can(PermissionAction.DELETE, PermissionController.EVENT))
+  // async delete(@Body() data: EventExpenseFileDeleteDTO) {
+  //   const id = parseInt(data.id)
+  //   return await this.eventExpenseFileService.deleteInfo(id);
+  // }
 }
