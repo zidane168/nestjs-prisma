@@ -112,6 +112,7 @@ model PostFile {
   ext String?
   name String 
   path String 
+  created DateTime @default(now())
 
   post Post? @relation(fields: [postId], references: [id]) // Define relation to Post 
 }

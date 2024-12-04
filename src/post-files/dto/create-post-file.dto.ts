@@ -16,12 +16,13 @@ export class CreatePostFileDto {
     path: string  
 
     @ApiProperty() 
-    created?: Date
+    created: Date
  
     constructor(document: CreatePostFileDto, domain: string) {    
-        const { path, name } = document || {};
+        const { path, name, created } = document || {};
         Object.assign(this, {    path, name });  
         this.path = path ? domain + "/" + path : ''
-        this.name = name ?? ''   
+        this.name = name ?? ''    
+        this.created = new Date(new Date().getTime()) 
       } 
 }

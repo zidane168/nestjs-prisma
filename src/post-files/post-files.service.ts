@@ -5,6 +5,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { existsSync, mkdirSync, writeFile } from 'fs'; 
 import * as path from 'path' 
 import { join } from 'path'
+import moment from 'moment';
 
 @Injectable()
 export class PostFilesService {
@@ -12,22 +13,14 @@ export class PostFilesService {
   constructor(private readonly databaseService: DatabaseService) {}
   
   async upload( file: Express.Multer.File, domain: string ) {    
+ 
     const postFileDto = new CreatePostFileDto(null, '');
     postFileDto.name = file.originalname;
     postFileDto.path = file.path;   
-    postFileDto.ext = file.mimetype 
-    // postFileDto.postId = null
-
+    postFileDto.ext = file.mimetype  
+    
     const result = await this.databaseService.postFile.create({ 
-      data: postFileDto
-      // data: { 
-      //   // name: postFileDto.name, 
-      //   // path: postFileDto.path, 
-      //   // ext: postFileDto.ext, 
-      //   // postId: null, 
-      //  //  post: { connect: { id: null } } 
-      //   // Use connect to set the post relationship 
-      // }
+      data: postFileDto 
     }) 
 
     return result;
