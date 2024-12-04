@@ -19,7 +19,8 @@ export class PostFilesController {
   })   
   @UseInterceptors(FileInterceptor('file')) 
   async upload(
-    @UploadedFile() file: Express.Multer.File, 
+    @UploadedFile( ) file: Express.Multer.File,  
+    @Body() uploadFileDTO: UploadFileDTO, // show string binary for upload on postman
     domain: string
   ) { 
     return this.postFilesService.upload(file, domain);

@@ -11,37 +11,25 @@ export class PostFilesService {
 
   constructor(private readonly databaseService: DatabaseService) {}
   
-  async upload( file: Express.Multer.File, domain: string ): Promise<void>  {   //Promise<CreatePostFileDto> {    
+  async upload( file: Express.Multer.File, domain: string ) {    
     const postFileDto = new CreatePostFileDto(null, '');
     postFileDto.name = file.originalname;
     postFileDto.path = file.path;   
+    postFileDto.ext = file.mimetype
+    postFileDto.postId = 0
 
     const result = this.databaseService.postFile.create({
       data: postFileDto
     })  
-
-    console.log( '----------------' )
-    console.log(result);
-    console.log( '----------------' )
+ 
 
     const filePath = join(__dirname, '..', '..', 'uploads', file.filename); 
-    const dirPath = join(__dirname, '..', '..', 'uploads'); 
-    // Ensure the uploads directory exists 
-    if (!existsSync(dirPath)) { 
-      mkdirSync(dirPath, { recursive: true }); 
-    } 
-    // Write file to the specified path 
-    
-    await new Promise<void>((resolve, reject) => { 
-      writeFile(filePath, file.buffer, (err) => { 
-        if (err) { 
-          return reject(err); } resolve(); 
-        });
-    })
+    console.log( '-------- xxxx -------' )
+    console.log(file)
+    console.log(filePath)
+    console.log( '---------- xxxx ------' ) 
 
-    // return file.filename 
-
-    // return this.getInfo(fileEntity.id, domain); 
+    return result;
   }
 
   // async getInfo(id: number, domain: string): Promise<CreatePostFileDto> {

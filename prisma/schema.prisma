@@ -108,12 +108,12 @@ model PostLanguage {
 
 model PostFile {
   id Int @id @default(autoincrement()) 
-  postId Int 
+  postId Int?
   ext String?
   name String 
   path String 
 
-  post Post @relation(fields: [postId], references: [id]) // Define relation to Post 
+  post Post? @relation(fields: [postId], references: [id]) // Define relation to Post 
 }
 
 model Setting {
@@ -141,6 +141,9 @@ model AdministratorToken {
   token String
   exp DateTime @default(now())
   administratorId Int 
+
+  created DateTime @default(now())
+  updated DateTime? @updatedAt 
 
   // administrator Administrator @relation(fields: [administratorId], references: [id]) 
   administrator Administrator @relation( fields: [administratorId], references: [id] )
