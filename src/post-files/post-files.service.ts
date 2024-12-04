@@ -15,19 +15,20 @@ export class PostFilesService {
     const postFileDto = new CreatePostFileDto(null, '');
     postFileDto.name = file.originalname;
     postFileDto.path = file.path;   
-    postFileDto.ext = file.mimetype
-    postFileDto.postId = 0
+    postFileDto.ext = file.mimetype 
+    // postFileDto.postId = null
 
-    const result = this.databaseService.postFile.create({
+    const result = await this.databaseService.postFile.create({ 
       data: postFileDto
-    })  
- 
-
-    const filePath = join(__dirname, '..', '..', 'uploads', file.filename); 
-    console.log( '-------- xxxx -------' )
-    console.log(file)
-    console.log(filePath)
-    console.log( '---------- xxxx ------' ) 
+      // data: { 
+      //   // name: postFileDto.name, 
+      //   // path: postFileDto.path, 
+      //   // ext: postFileDto.ext, 
+      //   // postId: null, 
+      //  //  post: { connect: { id: null } } 
+      //   // Use connect to set the post relationship 
+      // }
+    }) 
 
     return result;
   }

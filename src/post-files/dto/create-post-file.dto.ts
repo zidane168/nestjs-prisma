@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString } from "class-validator";
+import { IsDate, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreatePostFileDto {
 
@@ -13,16 +13,14 @@ export class CreatePostFileDto {
 
     @ApiProperty()
     @IsString() 
-    path: string 
+    path: string  
 
-    @ApiProperty()
-    @IsNumber() 
-    postId: number 
+    @ApiProperty() 
+    created?: Date
  
     constructor(document: CreatePostFileDto, domain: string) {    
-        const { postId,  path, name } = document || {};
-        Object.assign(this, {   postId,  path, name }); 
-        this.postId = postId ?? null
+        const { path, name } = document || {};
+        Object.assign(this, {    path, name });  
         this.path = path ? domain + "/" + path : ''
         this.name = name ?? ''   
       } 
