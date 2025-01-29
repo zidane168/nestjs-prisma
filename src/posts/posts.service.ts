@@ -9,6 +9,38 @@ export class PostsService {
 
   constructor(private readonly databaseService: DatabaseService) {   }
 
+  async add(
+    ids: string[],
+  ) {
+
+    // add one line to post
+    const post = await this.databaseService.post.create({
+      data: {
+        enabled: true, 
+      }
+    });
+
+    // and update postId with post.id with update Many ids above to postFIle
+    await this.databaseService.postFile.updateMany({
+      where: {
+        id: {
+          in: ids.map((id) => parseInt(id))
+        }
+      },
+
+      data: {
+        postId: post.id
+      }
+    })
+
+    // await this.databaseService.role.create({
+    //   data: {
+    //     ...createRoleDto,
+    //     createdBy: request.user.id,
+    //   }
+    // })
+  }
+
   async create(
     createPostDto: CreatePostDto, 
     request: Request) {

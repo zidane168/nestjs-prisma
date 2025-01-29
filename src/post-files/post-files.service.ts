@@ -6,6 +6,9 @@ import { existsSync, mkdirSync, writeFile } from 'fs';
 import * as path from 'path' 
 import { join } from 'path'
 import moment from 'moment';
+import { config } from 'process';
+
+require('dotenv').config
 
 @Injectable()
 export class PostFilesService {
@@ -23,6 +26,10 @@ export class PostFilesService {
       data: postFileDto 
     }) 
 
+    let temp = process.env.URL + "\\" + result.path
+    result.path = temp.replace(/\\/g, "/");
+
+    console.log( result.path ); // Output: abc/abc.png
     return result;
   }
 

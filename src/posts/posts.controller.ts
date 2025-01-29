@@ -5,17 +5,22 @@ import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('posts')
 export class PostsController {
-  constructor(
-    
-    private readonly postsService: PostsService) {}
+  constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  async create(
-    @Body() createPostDto: CreatePostDto, 
-    @Req() request: Request
+  async add(
+    @Body() ids: string[], 
   ) {
-    return this.postsService.create(createPostDto, request)
+    return this.postsService.add(ids) // add new post + update PostFIles with postIds = ids
   }
+
+  // @Post()
+  // async create(
+  //   @Body() createPostDto: CreatePostDto, 
+  //   @Req() request: Request
+  // ) {
+  //   return this.postsService.create(createPostDto, request)
+  // }
 
   @Get()
   async findAll() {
